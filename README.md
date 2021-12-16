@@ -23,7 +23,9 @@ Activate changes:
 
 (more information can be found here: https://www.jetbrains.com/help/pycharm/pipenv.html)
 
-## Installation
+## Execution
+
+### 1. From shell
 
 Install project dependencies
 
@@ -33,16 +35,21 @@ Start pipenv shell
 
 ```pipenv shell```
 
-## Run application
+Run application
 
 ```python main.py```
 
-## Pycharm configuration
+### 2. From Pycharm
 
-On first pycharm startup, you should be asked to set up pipenv environment. You should have pipenv installed (check above). 
+On first pycharm startup, you should be asked to set up pipenv environment. To continue, you should have pipenv installed (check above). 
 You can provide 'Pipenv executable' as 
 
 ```<BASES_BINARY_DIRECTORY>/bin/pipenv.```
 
-Next you can go to main.py file and click ctrl+shift+F10
+Finally, you can go to main.py file and click ```ctrl+shift+F10```, and it should work.
 
+## Troubleshooting
+
+1. ```matplotlib is currently using agg, which is a non-gui backend...``` -
+your system may miss python-tk package, so try to install it.
+(Example for ubuntu: ```sudo apt-get install python3-tk``` )
