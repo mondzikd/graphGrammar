@@ -1,5 +1,5 @@
-from products.p1 import p1
-from products.p2 import generate_p2_left_side_graph, p2
+from productions.p1 import p1
+from productions.p2 import generate_p2_left_side_graph, p2
 from strategies.super_simple_strategy import super_simple_strategy
 from utils.initialize import initialize
 from utils.visualize import visualize
