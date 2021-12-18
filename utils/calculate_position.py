@@ -1,8 +1,8 @@
-def calculate_I_pos(pos):
+def calculate_I_pos(pos_a, pos_b, pos_c, pos_d):
     return (
-        (pos[1][0] + pos[2][0] + pos[3][0] + pos[4][0])/4,
-        (pos[1][1] + pos[2][1] + pos[3][1] + pos[4][1])/4)
+        (pos_a[0] + pos_b[0] + pos_c[0] + pos_d[0])/4,
+        (pos_a[1] + pos_b[1] + pos_c[1] + pos_d[1])/4)
 
 
-def calculate_e_pos(pos):
-    return (pos[1][0] + pos[2][0]) / 2, pos[1][1] + pos[2][1] * 0.6
+def calculate_avg(pos_a, pos_b):
+    return (pos_a[0] + pos_b[0]) / 2, (pos_a[1] + pos_b[1]) / 2
