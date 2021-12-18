@@ -1,9 +1,9 @@
 # graphGrammar
 Gramatyki grafowe 2021-2022
 
-## Prerequisites
+## Prerequisites (for linux users)
 
-### pipenv (for linux users)
+### pipenv
 
 Install pipenv:
 
@@ -23,7 +23,7 @@ Activate changes:
 
 (more information can be found here: https://www.jetbrains.com/help/pycharm/pipenv.html)
 
-## Execution
+## Execution (for linux users)
 
 ### 1. From shell
 
