@@ -101,15 +101,18 @@ def validate_p9_mapping(graph, mapping):
     return e_yellow_left["pos"] == (x3, y3)
 
 
-def p9(graph, strategy=None):
-    mappings = find_all_p9_mappings(graph)
-    mappings = list(filter(lambda m: validate_p9_mapping(graph, m), mappings))
-
+def take_first(mappings):
     if len(mappings) == 0:
         raise Exception("P9 cannot be applied!")
 
-    # TODO: any strategy can be applied here
-    mapping = mappings[0]
+    return mappings[0]
+
+
+def p9(graph, strategy=take_first):
+    mappings = find_all_p9_mappings(graph)
+    mappings = list(filter(lambda m: validate_p9_mapping(graph, m), mappings))
+
+    mapping = strategy(mappings)
     swap_mapping = swap_dictionary(mapping)
 
     # Get IDs and nodes from the original graph
