@@ -2,6 +2,8 @@ import unittest
 import networkx as nx
 
 from productions.p8 import p8
+from productions.p8 import Strategy
+from utils.visualize import visualize
 
 
 class TestProduction8(unittest.TestCase):
@@ -300,6 +302,115 @@ class TestProduction8(unittest.TestCase):
         self.assertEqual(len(graph.nodes()), 12)
         self.assertEqual(len(graph.edges()), 15)
         self.assertTrue(nx.is_isomorphic(graph, result_graph))
+
+    def test_horizontal(self):
+        # given
+        graph = nx.Graph()
+        graph.add_nodes_from([
+            (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
+            (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (3, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
+            (4, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (5, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
+            (6, {"label": "I", "color": "brown", "level": 0, "pos": (0, 3)}),
+            (7, {"label": "I", "color": "brown", "level": 0, "pos": (0, 1)}),
+            (8, {"label": "I", "color": "brown", "level": 0, "pos": (4, 3)}),
+            (9, {"label": "I", "color": "brown", "level": 0, "pos": (4, 1)})
+        ])
+        graph.add_edges_from([
+            (1, 2), (1, 4), (1, 6), (1, 8),
+            (2, 3), (2, 6), (2, 7),
+            (3, 7),
+            (4, 5), (4, 8), (4, 9),
+            (5, 9)
+        ])
+
+        # when
+        p8(graph, strategy=Strategy.HORIZONTAL)
+
+        # then
+        self.assertEqual(len(graph.nodes()), 9)
+        self.assertEqual(len(graph.edges()), 12)
+
+    def test_apply_number(self):
+        # given
+        graph = nx.Graph(max_level=0)
+        graph.add_nodes_from([
+            (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
+            (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (3, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
+            (4, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (5, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
+            (6, {"label": "I", "color": "brown", "level": 0, "pos": (0, 3)}),
+            (7, {"label": "I", "color": "brown", "level": 0, "pos": (0, 1)}),
+            (8, {"label": "I", "color": "brown", "level": 0, "pos": (4, 3)}),
+            (9, {"label": "I", "color": "brown", "level": 0, "pos": (4, 1)}),
+            (10, {"label": "E", "color": "green", "level": 0, "pos": (9, 11)}),
+            (11, {"label": "E", "color": "green", "level": 0, "pos": (9, 9)}),
+            (12, {"label": "E", "color": "green", "level": 0, "pos": (9, 7)}),
+            (13, {"label": "E", "color": "green", "level": 0, "pos": (9, 9)}),
+            (14, {"label": "E", "color": "green", "level": 0, "pos": (9, 7)}),
+            (15, {"label": "I", "color": "red", "level": 0, "pos": (8, 10)}),
+            (16, {"label": "I", "color": "red", "level": 0, "pos": (8, 8)}),
+            (17, {"label": "I", "color": "red", "level": 0, "pos": (10, 10)}),
+            (18, {"label": "I", "color": "red", "level": 0, "pos": (10, 8)}),
+            (19, {"label": "E", "color": "green", "level": 0, "pos": (10, 11)}),
+        ])
+        graph.add_edges_from([
+            (1, 2), (1, 4), (1, 6), (1, 8),
+            (2, 3), (2, 6), (2, 7),
+            (3, 7),
+            (4, 5), (4, 8), (4, 9),
+            (5, 9),
+            (10, 11), (10, 13), (10, 15), (10, 17), (10, 19),
+            (11, 12), (11, 15), (11, 16),
+            (12, 16),
+            (13, 14), (13, 17), (13, 18),
+            (14, 18)
+        ])
+
+        result_graph = nx.Graph(max_level=0)
+        result_graph.add_nodes_from([
+            (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
+            (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (3, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
+            (6, {"label": "I", "color": "brown", "level": 0, "pos": (0, 3)}),
+            (7, {"label": "I", "color": "brown", "level": 0, "pos": (0, 1)}),
+            (8, {"label": "I", "color": "brown", "level": 0, "pos": (4, 3)}),
+            (9, {"label": "I", "color": "brown", "level": 0, "pos": (4, 1)}),
+            (10, {"label": "E", "color": "green", "level": 0, "pos": (9, 11)}),
+            (11, {"label": "E", "color": "green", "level": 0, "pos": (9, 9)}),
+            (12, {"label": "E", "color": "green", "level": 0, "pos": (9, 7)}),
+            (13, {"label": "E", "color": "green", "level": 0, "pos": (9, 9)}),
+            (14, {"label": "E", "color": "green", "level": 0, "pos": (9, 7)}),
+            (15, {"label": "I", "color": "red", "level": 0, "pos": (8, 10)}),
+            (16, {"label": "I", "color": "red", "level": 0, "pos": (8, 8)}),
+            (17, {"label": "I", "color": "red", "level": 0, "pos": (10, 10)}),
+            (18, {"label": "I", "color": "red", "level": 0, "pos": (10, 8)}),
+            (19, {"label": "E", "color": "green", "level": 0, "pos": (10, 11)}),
+        ])
+        result_graph.add_edges_from([
+            (1, 2), (1, 6), (1, 8),
+            (2, 3), (2, 6), (2, 7), (2, 8), (2, 9),
+            (3, 7), (3, 9),
+            (10, 11), (10, 13), (10, 15), (10, 17), (10, 19),
+            (11, 12), (11, 15), (11, 16),
+            (12, 16),
+            (13, 14), (13, 17), (13, 18),
+            (14, 18)
+        ])
+
+        # visualize(graph, level=0)
+
+        # when
+        p8(graph, n=1)
+        # visualize(graph, level=0)
+
+        # then
+        self.assertEqual(len(graph.nodes()), 17)
+        self.assertEqual(len(graph.edges()), 23)
+        self.assertTrue(nx.is_isomorphic(graph, result_graph))
+
 
 if __name__ == '__main__':
     unittest.main()
