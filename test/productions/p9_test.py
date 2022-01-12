@@ -3,6 +3,7 @@ import unittest
 import networkx as nx
 
 from productions.p9 import p9
+from utils.visualize import visualize
 
 
 class P9TestCase(unittest.TestCase):
@@ -52,7 +53,9 @@ class P9TestCase(unittest.TestCase):
         )
 
         # when
+        visualize(graph)
         p9(graph)
+        visualize(graph)
 
         # then
         expected_graph = nx.Graph()
@@ -142,7 +145,9 @@ class P9TestCase(unittest.TestCase):
         )
 
         # when
+        visualize(graph)
         p9(graph)
+        visualize(graph)
 
         # then
         expected_graph = nx.Graph()
@@ -235,6 +240,7 @@ class P9TestCase(unittest.TestCase):
 
         # when
         # then
+        visualize(graph)
         self.assertRaises(Exception, p9, graph)
 
     def test_p9_invalid_labels(self):
@@ -285,6 +291,7 @@ class P9TestCase(unittest.TestCase):
 
         # when
         # then
+        visualize(graph)
         self.assertRaises(Exception, p9, graph)
 
     def test_p9_invalid_nodes(self):
@@ -338,6 +345,7 @@ class P9TestCase(unittest.TestCase):
 
         # when
         # then
+        visualize(graph)
         self.assertRaises(Exception, p9, graph)
 
     def test_p9_missing_nodes(self):
@@ -385,6 +393,7 @@ class P9TestCase(unittest.TestCase):
 
         # when
         # then
+        visualize(graph)
         self.assertRaises(Exception, p9, graph)
 
     def test_p9_missing_edges(self):
@@ -434,6 +443,7 @@ class P9TestCase(unittest.TestCase):
 
         # when
         # then
+        visualize(graph)
         self.assertRaises(Exception, p9, graph)
 
 

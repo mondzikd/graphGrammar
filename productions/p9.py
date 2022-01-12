@@ -1,5 +1,4 @@
 import networkx as nx
-from networkx.algorithms import swap
 
 _E_GREEN_ID = 0
 _I_ORANGE_LEFT_ID = 1
