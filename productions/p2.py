@@ -2,11 +2,11 @@ import networkx as nx
 
 from utils.calculate_position import calculate_I_pos, calculate_avg
 
-_UPPER_LEFT_ID = 8
-_UPPER_RIGHT_ID = 9
-_LOWER_RIGHT_ID = 15
-_LOWER_LEFT_ID = 10
-_CENTER_ID = 26
+_UPPER_LEFT_ID = "_UPPER_LEFT_ID"
+_UPPER_RIGHT_ID = "_UPPER_RIGHT_ID"
+_LOWER_RIGHT_ID = "_LOWER_RIGHT_ID"
+_LOWER_LEFT_ID = "_LOWER_LEFT_ID"
+_CENTER_ID = "_CENTER_ID"
 
 
 def generate_p2_left_side_graph():
@@ -15,7 +15,7 @@ def generate_p2_left_side_graph():
         Returns:
             nx.Graph which should be used in finding subgraph strategy.
         """
-    graph = nx.Graph(id="left_p9")
+    graph = nx.Graph(id="left_p2")
 
     graph.add_nodes_from([
         (_UPPER_LEFT_ID, {"label": "E"}),
@@ -93,4 +93,5 @@ def p2(graph, mapping):
 
 
 def is_input_valid(graph, mapping):
-    return True     # TODO: add validation
+    return graph is not None and mapping is not None and \
+        True

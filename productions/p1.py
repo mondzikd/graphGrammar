@@ -14,13 +14,13 @@ def p1(graph, pos=None):
         Returns:
             Nothing. applies production on argument graph in place or raises an error if input not valid.
     """
-    if not is_graph_valid(graph):
-        raise Exception("Expected starting graph: [0 {'label': 'e', 'color': 'red'}]")
-    if not is_pos_valid(pos):
-        raise Exception("Expected 'pos' argument: {1: (x1, y1), 2: (x2, y2), 3: (x3, y3), 4: (x4, y4)}")
-
     if pos is None:
         pos = {1: (0, 1), 2: (1, 1), 3: (0, 0), 4: (1, 0)}
+
+    if not is_graph_valid(graph):
+        raise Exception("Expected starting graph: [0 {'label': 'S'}]")
+    if not is_pos_valid(pos):
+        raise Exception("Expected 'pos' argument: {1: (x1, y1), 2: (x2, y2), 3: (x3, y3), 4: (x4, y4)}")
 
     graph.add_nodes_from([
         (1, {"label": 'E', "color": "blue", "level": 1, "pos": pos[1]}),
@@ -50,4 +50,6 @@ def is_graph_valid(graph):
 
 
 def is_pos_valid(pos):
-    return True     # TODO: add validation
+    return all(key in pos.keys() for key in [1, 2, 3, 4]) and \
+           all(isinstance(pos[key], (list, tuple)) for key in [1, 2, 3, 4]) and \
+           all(len(pos[key]) >= 2 for key in [1, 2, 3, 4])
