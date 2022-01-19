@@ -105,9 +105,13 @@ def generate_p7_left_side_graph_test():
 
     return graph
 
+
 def is_input_valid(graph, mapping):
     return graph.nodes[mapping[_MIDDLE_RIGHT_E_ID]]["pos"] == graph.nodes[mapping[_MIDDLE_LEFT_E_ID]]["pos"] and graph.nodes[mapping[_UPPER_RIGHT_E_ID]]["pos"] == graph.nodes[mapping[_UPPER_LEFT_E_ID]]["pos"] \
            and graph.nodes[mapping[_LOWER_LEFT_E_ID]]["pos"] == graph.nodes[mapping[_LOWER_RIGHT_E_ID]]["pos"] and is_middle_E_in_center(graph, mapping)
 
+
 def is_middle_E_in_center(graph, mapping):
-    return (graph.nodes[mapping[_LOWER_LEFT_E_ID]]["pos"] + graph.nodes[mapping[_UPPER_LEFT_E_ID]]["pos"])/2 == graph.nodes[mapping[_MIDDLE_LEFT_E_ID]]["pos"]
+    x = (graph.nodes[mapping[_LOWER_LEFT_E_ID]]["pos"][0] + graph.nodes[mapping[_UPPER_LEFT_E_ID]]["pos"][0]) / 2
+    y = (graph.nodes[mapping[_LOWER_LEFT_E_ID]]["pos"][1] + graph.nodes[mapping[_UPPER_LEFT_E_ID]]["pos"][1]) / 2
+    return x == graph.nodes[mapping[_MIDDLE_LEFT_E_ID]]["pos"][0] and y == graph.nodes[mapping[_MIDDLE_LEFT_E_ID]]["pos"][1]

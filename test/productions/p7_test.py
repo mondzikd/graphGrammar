@@ -288,7 +288,40 @@ class P7Test(unittest.TestCase):
             p7(graph, super_simple_strategy(graph, generate_p7_left_side_graph()))
 
     def test_invalid_position(self):
-        pass
+        # given
+        # given
+        graph = nx.Graph()
+        graph.graph["max_level"] = 3
+        graph.add_nodes_from([
+            (0, {"label": "E", "level": 1, "color": "green", "pos": (10, 10)}),
+            (1, {"label": "i", "level": 2, "color": "brown", "pos": (9, 9)}),
+            (2, {"label": "i", "level": 2, "color": "brown", "pos": (11, 9)}),
+            (3, {"label": "I", "level": 3, "color": "grey", "pos": (8, 6)}),
+            (4, {"label": "I", "level": 3, "color": "grey", "pos": (12, 6)}),
+            (5, {"label": "I", "level": 3, "color": "grey", "pos": (12, 4)}),
+            (6, {"label": "I", "level": 3, "color": "grey", "pos": (8, 4)}),
+            (7, {"label": "E", "level": 3, "color": "blue", "pos": (10, 7)}),
+            (8, {"label": "E", "level": 3, "color": "blue", "pos": (10, 7)}),
+            (9, {"label": "E", "level": 3, "color": "blue", "pos": (10, 6)}),
+            (10, {"label": "E", "level": 3, "color": "blue", "pos": (10, 6)}),
+            (11, {"label": "E", "level": 3, "color": "blue", "pos": (10, 3)}),
+            (12, {"label": "E", "level": 3, "color": "blue", "pos": (10, 3)})
+        ])
+
+        graph.add_edges_from([
+            (0, 1), (0, 2), (1, 3),
+            (1, 6),
+            (2, 4), (2, 5),
+            (3, 7), (3, 9),
+            (6, 9), (6, 11),
+            (4, 8), (4, 10),
+            (5, 10), (5, 12),
+            (7, 9), (9, 11),
+            (8, 10), (10, 12)
+        ])
+
+        with self.assertRaises(Exception):
+            p7(graph, super_simple_strategy(graph, generate_p7_left_side_graph()))
 
 
 if __name__ == '__main__':
