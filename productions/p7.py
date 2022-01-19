@@ -67,7 +67,7 @@ def p7(graph, mapping):
     curr_middle_level = graph.nodes[mapping[_MIDDLE_LEFT_E_ID]]['level'] + 1
     curr_upper_level = graph.nodes[mapping[_UPPER_LEFT_E_ID]]['level'] + 1
 
-    graph.graph['max_level'] = max(curr_lower_level,curr_middle_level,curr_upper_level, graph.graph['max_level'])
+    graph.graph['max_level'] = max(curr_lower_level, curr_middle_level, curr_upper_level, graph.graph['max_level'])
 
     graph.remove_nodes_from([mapping[_LOWER_RIGHT_E_ID], mapping[_MIDDLE_RIGHT_E_ID], mapping[_UPPER_RIGHT_E_ID]])
     graph.add_edges_from([
@@ -92,7 +92,7 @@ def generate_p7_left_side_graph_test():
         (_MIDDLE_LEFT_E_ID, {"label": "E", "level": 3, "color": "blue", "pos": (10, 5)}),
         (_MIDDLE_RIGHT_E_ID, {"label": "E", "level": 3, "color": "blue", "pos": (10, 5)}),
         (_LOWER_LEFT_E_ID, {"label": "E", "level": 3, "color": "blue", "pos": (10, 3)}),
-        (_LOWER_RIGHT_E_ID, {"label": "E", "level": 3, "color": "blue", "pos": (10, 3)}),
+        (_LOWER_RIGHT_E_ID, {"label": "E", "level": 3, "color": "blue", "pos": (10, 3)})
     ])
 
     graph.add_edges_from([
