@@ -287,6 +287,9 @@ class P7Test(unittest.TestCase):
         with self.assertRaises(IndexError):
             p7(graph, super_simple_strategy(graph, generate_p7_left_side_graph()))
 
+    def test_invalid_position(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
