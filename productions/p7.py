@@ -106,4 +106,5 @@ def generate_p7_left_side_graph_test():
     return graph
 
 def is_input_valid(graph, mapping):
-    return True
+    return graph.nodes[mapping[_MIDDLE_RIGHT_E_ID]]["pos"] == graph.nodes[mapping[_MIDDLE_LEFT_E_ID]]["pos"] and graph.nodes[mapping[_UPPER_RIGHT_E_ID]]["pos"] == graph.nodes[mapping[_UPPER_LEFT_E_ID]]["pos"] \
+           and graph.nodes[mapping[_LOWER_LEFT_E_ID]]["pos"] == graph.nodes[mapping[_LOWER_RIGHT_E_ID]]["pos"]
