@@ -477,10 +477,10 @@ class TestProduction8(unittest.TestCase):
             (14, 18)
         ])
 
-        # visualize(graph, level=0)
+        visualize(graph, level=0, overlap=False)
         # when
         p8(graph, strategy=Strategy.HORIZONTAL)
-        # visualize(graph, level=0)
+        visualize(graph, level=0, overlap=False)
 
         # then
         self.assertEqual(len(graph.nodes()), 16)
