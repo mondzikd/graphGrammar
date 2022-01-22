@@ -5,11 +5,22 @@ from productions.p8 import p8
 from productions.p8 import Strategy
 from utils.visualize import visualize
 
+visualization = False
+
+
+def apply_p8_and_handle_visualization(graph, level=0, overlap=False, n=None, strategy=Strategy.ID):
+    if visualization:
+        visualize(graph, level=level, overlap=overlap)
+        p8(graph, n=n, strategy=strategy)
+        visualize(graph, level=level, overlap=overlap)
+    else:
+        p8(graph, n=n, strategy=strategy)
+
 
 class TestProduction8(unittest.TestCase):
     def test_simple_example(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=0)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
@@ -45,8 +56,7 @@ class TestProduction8(unittest.TestCase):
             (3, 7), (3, 9)
         ])
 
-        # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph)
 
         # then
         self.assertEqual(len(graph.nodes()), 7)
@@ -55,7 +65,7 @@ class TestProduction8(unittest.TestCase):
 
     def test_complex_graph(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=0)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
@@ -99,7 +109,7 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph)
 
         # then
         self.assertEqual(len(graph.nodes()), 10)
@@ -108,7 +118,7 @@ class TestProduction8(unittest.TestCase):
 
     def test_different_position(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=0)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
@@ -129,7 +139,7 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph)
 
         # then
         self.assertEqual(len(graph.nodes()), 9)
@@ -137,13 +147,13 @@ class TestProduction8(unittest.TestCase):
 
     def test_different_label(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=0)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
             (3, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
-            (4, {"label": "I", "color": "blue", "level": 0, "pos": (2, 2)}),
-            (5, {"label": "E", "color": "blue", "level": 0, "pos": (2, 1)}),
+            (4, {"label": "I", "color": "orange", "level": 0, "pos": (2, 2)}),
+            (5, {"label": "E", "color": "blue", "level": 0, "pos": (2, 0)}),
             (6, {"label": "I", "color": "brown", "level": 0, "pos": (0, 3)}),
             (7, {"label": "I", "color": "brown", "level": 0, "pos": (0, 1)}),
             (8, {"label": "I", "color": "brown", "level": 0, "pos": (4, 3)}),
@@ -158,7 +168,7 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph)
 
         # then
         self.assertEqual(len(graph.nodes()), 9)
@@ -166,13 +176,13 @@ class TestProduction8(unittest.TestCase):
 
     def test_different_level_without_matching_graph(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=1)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 1, "pos": (2, 2)}),
             (3, {"label": "E", "color": "blue", "level": 1, "pos": (2, 0)}),
             (4, {"label": "I", "color": "blue", "level": 1, "pos": (2, 2)}),
-            (5, {"label": "E", "color": "blue", "level": 1, "pos": (2, 1)}),
+            (5, {"label": "E", "color": "blue", "level": 1, "pos": (2, 0)}),
             (6, {"label": "I", "color": "brown", "level": 0, "pos": (0, 3)}),
             (7, {"label": "I", "color": "brown", "level": 0, "pos": (0, 1)}),
             (8, {"label": "I", "color": "brown", "level": 0, "pos": (4, 3)}),
@@ -187,7 +197,7 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph, level=0)
 
         # then
         self.assertEqual(len(graph.nodes()), 9)
@@ -195,7 +205,7 @@ class TestProduction8(unittest.TestCase):
 
     def test_different_level_with_matching_graph(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=1)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 1, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 1, "pos": (2, 2)}),
@@ -239,7 +249,7 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph)
 
         # then
         self.assertEqual(len(graph.nodes()), 10)
@@ -248,7 +258,7 @@ class TestProduction8(unittest.TestCase):
 
     def test_different_level_with_matching_graph_on_lower_level(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=1)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
@@ -296,16 +306,16 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph)
+        apply_p8_and_handle_visualization(graph)
 
         # then
         self.assertEqual(len(graph.nodes()), 12)
         self.assertEqual(len(graph.edges()), 15)
         self.assertTrue(nx.is_isomorphic(graph, result_graph))
 
-    def test_horizontal(self):
+    def test_horizontal_strategy_for_vertical_graph(self):
         # given
-        graph = nx.Graph()
+        graph = nx.Graph(max_level=0)
         graph.add_nodes_from([
             (1, {"label": 'E', "color": "blue", "level": 0, "pos": (2, 4)}),
             (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
@@ -326,7 +336,7 @@ class TestProduction8(unittest.TestCase):
         ])
 
         # when
-        p8(graph, strategy=Strategy.HORIZONTAL)
+        apply_p8_and_handle_visualization(graph, strategy=Strategy.HORIZONTAL)
 
         # then
         self.assertEqual(len(graph.nodes()), 9)
@@ -400,18 +410,15 @@ class TestProduction8(unittest.TestCase):
             (14, 18)
         ])
 
-        visualize(graph, level=0)
-
         # when
-        p8(graph, n=1)
-        visualize(graph, level=0)
+        apply_p8_and_handle_visualization(graph, n=1)
 
         # then
         self.assertEqual(len(graph.nodes()), 17)
         self.assertEqual(len(graph.edges()), 23)
         self.assertTrue(nx.is_isomorphic(graph, result_graph))
 
-    def test_horizontal2(self):
+    def test_horizontal_for_horizontal_and_vertical_graph(self):
         # given
         graph = nx.Graph(max_level=0)
         graph.add_nodes_from([
@@ -477,10 +484,82 @@ class TestProduction8(unittest.TestCase):
             (14, 18)
         ])
 
-        visualize(graph, level=0, overlap=False)
         # when
-        p8(graph, strategy=Strategy.HORIZONTAL)
-        visualize(graph, level=0, overlap=False)
+        apply_p8_and_handle_visualization(graph, strategy=Strategy.HORIZONTAL)
+
+        # then
+        self.assertEqual(len(graph.nodes()), 16)
+        self.assertEqual(len(graph.edges()), 22)
+        self.assertTrue(nx.is_isomorphic(graph, result_graph))
+
+    def test_vertical_for_horizontal_and_vertical_graph(self):
+        # given
+        graph = nx.Graph(max_level=0)
+        graph.add_nodes_from([
+            (1, {"label": 'E', "color": "blue", "level": 0, "pos": (0, 2)}),
+            (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (3, {"label": "E", "color": "blue", "level": 0, "pos": (4, 2)}),
+            (4, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (5, {"label": "E", "color": "blue", "level": 0, "pos": (4, 2)}),
+            (6, {"label": "I", "color": "brown", "level": 0, "pos": (1, 0)}),
+            (7, {"label": "I", "color": "brown", "level": 0, "pos": (3, 0)}),
+            (8, {"label": "I", "color": "brown", "level": 0, "pos": (1, 4)}),
+            (9, {"label": "I", "color": "brown", "level": 0, "pos": (3, 4)}),
+            (10, {"label": "E", "color": "green", "level": 0, "pos": (2, 10)}),
+            (11, {"label": "E", "color": "green", "level": 0, "pos": (2, 8)}),
+            (12, {"label": "E", "color": "green", "level": 0, "pos": (2, 6)}),
+            (13, {"label": "E", "color": "green", "level": 0, "pos": (2, 8)}),
+            (14, {"label": "E", "color": "green", "level": 0, "pos": (2, 6)}),
+            (15, {"label": "I", "color": "red", "level": 0, "pos": (1, 9)}),
+            (16, {"label": "I", "color": "red", "level": 0, "pos": (1, 7)}),
+            (17, {"label": "I", "color": "red", "level": 0, "pos": (3, 9)}),
+            (18, {"label": "I", "color": "red", "level": 0, "pos": (3, 7)}),
+        ])
+        graph.add_edges_from([
+            (1, 2), (1, 4), (1, 6), (1, 8),
+            (2, 3), (2, 6), (2, 7),
+            (3, 7),
+            (4, 5), (4, 8), (4, 9),
+            (5, 9),
+            (10, 11), (10, 13), (10, 15), (10, 17),
+            (11, 12), (11, 15), (11, 16),
+            (12, 16),
+            (13, 14), (13, 17), (13, 18),
+            (14, 18)
+        ])
+
+        result_graph = nx.Graph(max_level=0)
+        result_graph.add_nodes_from([
+            (1, {"label": 'E', "color": "blue", "level": 0, "pos": (0, 2)}),
+            (2, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (3, {"label": "E", "color": "blue", "level": 0, "pos": (4, 2)}),
+            (4, {"label": "E", "color": "blue", "level": 0, "pos": (2, 2)}),
+            (5, {"label": "E", "color": "blue", "level": 0, "pos": (4, 2)}),
+            (6, {"label": "I", "color": "brown", "level": 0, "pos": (1, 0)}),
+            (7, {"label": "I", "color": "brown", "level": 0, "pos": (3, 0)}),
+            (8, {"label": "I", "color": "brown", "level": 0, "pos": (1, 4)}),
+            (9, {"label": "I", "color": "brown", "level": 0, "pos": (3, 4)}),
+            (10, {"label": "E", "color": "green", "level": 0, "pos": (2, 10)}),
+            (11, {"label": "E", "color": "green", "level": 0, "pos": (2, 8)}),
+            (12, {"label": "E", "color": "green", "level": 0, "pos": (2, 6)}),
+            (15, {"label": "I", "color": "red", "level": 0, "pos": (1, 9)}),
+            (16, {"label": "I", "color": "red", "level": 0, "pos": (1, 7)}),
+            (17, {"label": "I", "color": "red", "level": 0, "pos": (3, 9)}),
+            (18, {"label": "I", "color": "red", "level": 0, "pos": (3, 7)}),
+        ])
+        result_graph.add_edges_from([
+            (1, 2), (1, 4), (1, 6), (1, 8),
+            (2, 3), (2, 6), (2, 7),
+            (3, 7),
+            (4, 5), (4, 8), (4, 9),
+            (5, 9),
+            (10, 11), (10, 15), (10, 17),
+            (11, 12), (11, 15), (11, 16), (11, 17), (11, 18),
+            (12, 16), (12, 18)
+        ])
+
+        # when
+        apply_p8_and_handle_visualization(graph, strategy=Strategy.VERTICAL)
 
         # then
         self.assertEqual(len(graph.nodes()), 16)
