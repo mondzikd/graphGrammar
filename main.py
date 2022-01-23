@@ -20,7 +20,7 @@ def main():
     p2(graph, super_simple_strategy(graph, left_side))
 
     # visualize(graph)
-    visualize(graph, level=3)
+    visualize(graph, level=4)
 
 
 if __name__ == '__main__':
